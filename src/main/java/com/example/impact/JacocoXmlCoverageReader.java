@@ -17,7 +17,7 @@ public class JacocoXmlCoverageReader {
         Set<CoveredMethod> methods = new LinkedHashSet<>();
 
         try (InputStream input = Files.newInputStream(jacocoXml)) {
-            Element report = DocumentBuilderFactory.newInstance()
+            Element report = documentBuilderFactory()
                     .newDocumentBuilder()
                     .parse(input)
                     .getDocumentElement();
@@ -72,5 +72,15 @@ public class JacocoXmlCoverageReader {
             return -1;
         }
         return Integer.parseInt(line);
+    }
+
+    private DocumentBuilderFactory documentBuilderFactory() {
+        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+        try {
+            factory.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+        } catch (Exception ignored) {
+            // Some XML parsers do not expose this feature; parsing still works without validation.
+        }
+        return factory;
     }
 }
