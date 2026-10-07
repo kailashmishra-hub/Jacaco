@@ -8,6 +8,20 @@ The goal is to build a knowledge map that answers:
 If this step definition or helper method changed, which feature scenarios should run?
 ```
 
+## Agent Instructions
+
+For the Git Impact Pull Request agent approach, start here:
+
+```text
+agents/README.md
+agents/jacoco-mapping-builder-agent.md
+agents/git-pr-impact-agent.md
+agents/impact-report-agent.md
+JACOCO_MAPPING_INSTRUCTIONS.md
+```
+
+These files describe how an agent should use Git diffs, Cucumber feature files, step definitions, and JaCoCo mappings together.
+
 ## How the Mapping Works
 
 1. Run each Cucumber scenario with a separate JaCoCo output.
