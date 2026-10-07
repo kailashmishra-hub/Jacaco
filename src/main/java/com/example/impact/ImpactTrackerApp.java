@@ -15,6 +15,8 @@ public class ImpactTrackerApp {
 
         switch (args[0]) {
             case "build" -> build(args);
+            case "graph" -> graph(args);
+            case "compare-graph" -> compareGraph(args);
             case "impact" -> impact(args);
             default -> {
                 System.err.println("Unknown command: " + args[0]);
@@ -37,6 +39,32 @@ public class ImpactTrackerApp {
         KnowledgeMapWriter writer = new KnowledgeMapWriter();
         writer.writeJson(knowledgeMap, outputDirectory.resolve("knowledge-map.json"));
         writer.writeTsv(knowledgeMap, outputDirectory.resolve("scenario-method-map.tsv"));
+    }
+
+    private static void graph(String[] args) throws Exception {
+        CliOptions options = CliOptions.parse(args);
+        Path jacocoXml = options.required("--jacoco-xml");
+        Path outputDirectory = options.required("--output-dir");
+
+        List<MethodGraphNode> nodes = new JacocoMethodGraphReader().read(jacocoXml);
+        new MethodGraphTsv().write(nodes, outputDirectory.resolve("method-graph.tsv"));
+
+        MethodGraphWriter writer = new MethodGraphWriter();
+        writer.writeDot(nodes, outputDirectory.resolve("method-graph.dot"));
+        writer.writeMarkdownIndex(nodes, outputDirectory.resolve("method-index.md"));
+    }
+
+    private static void compareGraph(String[] args) throws Exception {
+        CliOptions options = CliOptions.parse(args);
+        Path baseline = options.required("--baseline");
+        Path current = options.required("--current");
+        Path output = options.required("--output");
+
+        MethodGraphTsv tsv = new MethodGraphTsv();
+        List<MethodGraphChange> changes = new MethodGraphComparator().compare(
+                tsv.read(baseline),
+                tsv.read(current));
+        new MethodGraphReportWriter().writeMarkdown(changes, output);
     }
 
     private static void impact(String[] args) throws Exception {
@@ -62,6 +90,8 @@ public class ImpactTrackerApp {
         System.out.println("""
                 Usage:
                   java -jar cucumber-impact-tracker.jar build --scenario-index <csv> --coverage-dir <dir> --output-dir <dir>
+                  java -jar cucumber-impact-tracker.jar graph --jacoco-xml <jacoco.xml> --output-dir <dir>
+                  java -jar cucumber-impact-tracker.jar compare-graph --baseline <method-graph.tsv> --current <method-graph.tsv> --output <md>
                   java -jar cucumber-impact-tracker.jar impact --map <scenario-method-map.tsv> --changed-methods <txt> --output <md>
 
                 Scenario index CSV columns:

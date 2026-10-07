@@ -57,6 +57,36 @@ Open the generated report:
 target/impact-report.md
 ```
 
+## Build a Method Knowledge Graph from JaCoCo XML
+
+If you only have a normal aggregate JaCoCo XML report, like:
+
+```text
+target/site/jacoco/jacoco.xml
+```
+
+you can still create a code-side knowledge graph:
+
+```powershell
+java -jar target/cucumber-impact-tracker-1.0.0-SNAPSHOT.jar graph --jacoco-xml target/site/jacoco/jacoco.xml --output-dir target/method-graph
+```
+
+This writes:
+
+```text
+target/method-graph/method-graph.tsv
+target/method-graph/method-graph.dot
+target/method-graph/method-index.md
+```
+
+To detect method graph changes between two runs:
+
+```powershell
+java -jar target/cucumber-impact-tracker-1.0.0-SNAPSHOT.jar compare-graph --baseline target/baseline-method-graph.tsv --current target/method-graph/method-graph.tsv --output target/method-graph-changes.md
+```
+
+The compare command reports added methods, removed methods, and methods whose JaCoCo coverage counters changed. A JaCoCo XML file does not contain method body hashes, so exact source-code change detection still needs a Git/source parser adapter.
+
 ## Scenario Index Format
 
 ```csv
