@@ -57,6 +57,8 @@ class ImpactTrackerAppIntegrationTest {
 
         assertTrue(Files.readString(outputDirectory.resolve("knowledge-map.json"))
                 .contains("com.acme.steps.LoginSteps#userLogsIn()V"));
+        assertTrue(Files.readString(outputDirectory.resolve("scenario-class-method-map.tsv"))
+                .contains("com.acme.steps.LoginSteps\tuserLogsIn\t()V"));
         assertEquals("""
                 # Impacted Cucumber Scenarios
 

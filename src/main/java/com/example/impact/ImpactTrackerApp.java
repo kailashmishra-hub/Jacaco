@@ -39,6 +39,7 @@ public class ImpactTrackerApp {
         KnowledgeMapWriter writer = new KnowledgeMapWriter();
         writer.writeJson(knowledgeMap, outputDirectory.resolve("knowledge-map.json"));
         writer.writeTsv(knowledgeMap, outputDirectory.resolve("scenario-method-map.tsv"));
+        writer.writeScenarioMethodClassTsv(knowledgeMap, outputDirectory.resolve("scenario-class-method-map.tsv"));
     }
 
     private static void graph(String[] args) throws Exception {

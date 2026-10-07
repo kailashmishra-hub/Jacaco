@@ -26,6 +26,29 @@ public class KnowledgeMapWriter {
         write(output, tsv.toString());
     }
 
+    public void writeScenarioMethodClassTsv(KnowledgeMap knowledgeMap, Path output) throws IOException {
+        StringBuilder tsv = new StringBuilder(
+                "scenarioId\tfeaturePath\tscenarioLine\tscenarioName\ttags\tclassName\tmethodName\tdescriptor\tmethodId\n");
+
+        for (ScenarioDescriptor scenario : knowledgeMap.scenarios()) {
+            Set<String> methodIds = knowledgeMap.methodIdsByScenarioId().getOrDefault(scenario.id(), Set.of());
+            for (String methodId : methodIds) {
+                CoveredMethod method = CoveredMethod.fromId(methodId);
+                tsv.append(scenario.id()).append('\t')
+                        .append(scenario.featurePath()).append('\t')
+                        .append(scenario.line()).append('\t')
+                        .append(scenario.name()).append('\t')
+                        .append(String.join(" ", scenario.tags())).append('\t')
+                        .append(method.className()).append('\t')
+                        .append(method.methodName()).append('\t')
+                        .append(method.descriptor()).append('\t')
+                        .append(method.id()).append('\n');
+            }
+        }
+
+        write(output, tsv.toString());
+    }
+
     public void writeJson(KnowledgeMap knowledgeMap, Path output) throws IOException {
         StringBuilder json = new StringBuilder();
         json.append("{\n  \"version\": 1,\n  \"scenarios\": [\n");

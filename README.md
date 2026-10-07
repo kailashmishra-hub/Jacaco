@@ -87,6 +87,28 @@ java -jar target/cucumber-impact-tracker-1.0.0-SNAPSHOT.jar compare-graph --base
 
 The compare command reports added methods, removed methods, and methods whose JaCoCo coverage counters changed. A JaCoCo XML file does not contain method body hashes, so exact source-code change detection still needs a Git/source parser adapter.
 
+## Scenario to Class to Method Mapping
+
+When coverage is collected per scenario, the `build` command writes an agent-friendly mapping file:
+
+```text
+target/impact-map/scenario-class-method-map.tsv
+```
+
+Columns:
+
+```text
+scenarioId, featurePath, scenarioLine, scenarioName, tags, className, methodName, descriptor, methodId
+```
+
+That file is the direct lookup table for:
+
+```text
+Which scenarios are tied to this class and method?
+```
+
+JaCoCo can provide the `className`, `methodName`, JVM descriptor, source line, and coverage counters. The scenario name is only available when the report is captured scenario-by-scenario. A single aggregate `jacoco.xml` can build the method graph, but it cannot prove which Cucumber scenario touched each method.
+
 ## Scenario Index Format
 
 ```csv
