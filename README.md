@@ -31,6 +31,28 @@ mvn verify
 
 This runs unit tests, generates the normal JaCoCo coverage report, and enforces the 80% line coverage rule for this tool itself.
 
+## Prepare a Selenium Cucumber Repository
+
+First scan the target automation repo:
+
+```powershell
+java -jar target/cucumber-impact-tracker-1.0.0-SNAPSHOT.jar prepare --repo-root C:\path\to\Selenium_WithSkillsRepo --output-dir target\prepared
+```
+
+This writes:
+
+```text
+target/prepared/scenario-index.csv
+target/prepared/static-scenario-step-map.tsv
+target/prepared/unmatched-steps.tsv
+```
+
+Use `scenario-index.csv` as the input to the JaCoCo mapping build once each scenario has its own JaCoCo XML report. Use `static-scenario-step-map.tsv` to understand:
+
+```text
+scenario -> feature step -> step definition class -> step definition method
+```
+
 ## Try the Example
 
 Build the JAR:

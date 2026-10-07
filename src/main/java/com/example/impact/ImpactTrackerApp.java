@@ -14,6 +14,7 @@ public class ImpactTrackerApp {
         }
 
         switch (args[0]) {
+            case "prepare" -> prepare(args);
             case "build" -> build(args);
             case "graph" -> graph(args);
             case "compare-graph" -> compareGraph(args);
@@ -24,6 +25,14 @@ public class ImpactTrackerApp {
                 System.exit(2);
             }
         }
+    }
+
+    private static void prepare(String[] args) throws Exception {
+        CliOptions options = CliOptions.parse(args);
+        Path repoRoot = options.required("--repo-root");
+        Path outputDirectory = options.required("--output-dir");
+
+        new CucumberRepositoryPreparer().prepare(repoRoot, outputDirectory);
     }
 
     private static void build(String[] args) throws Exception {
@@ -90,6 +99,7 @@ public class ImpactTrackerApp {
     private static void printUsage() {
         System.out.println("""
                 Usage:
+                  java -jar cucumber-impact-tracker.jar prepare --repo-root <selenium-cucumber-repo> --output-dir <dir>
                   java -jar cucumber-impact-tracker.jar build --scenario-index <csv> --coverage-dir <dir> --output-dir <dir>
                   java -jar cucumber-impact-tracker.jar graph --jacoco-xml <jacoco.xml> --output-dir <dir>
                   java -jar cucumber-impact-tracker.jar compare-graph --baseline <method-graph.tsv> --current <method-graph.tsv> --output <md>
