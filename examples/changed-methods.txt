@@ -1,0 +1,2 @@
+com.acme.steps.LoginSteps#userLogsIn()V
+com.acme.helpers.AuthHelper#validateToken(Ljava/lang/String;)Z

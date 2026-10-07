@@ -1,0 +1,3 @@
+scenarioId,featurePath,line,name,tags
+login-valid-user,features/login.feature,8,Valid user logs in,@smoke @login
+checkout-success,features/checkout.feature,14,Successful checkout,@regression @checkout

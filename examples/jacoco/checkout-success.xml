@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report name="checkout-success">
+  <package name="com/acme/steps">
+    <class name="com/acme/steps/CheckoutSteps" sourcefilename="CheckoutSteps.java">
+      <method name="submitOrder" desc="()V" line="35">
+        <counter type="INSTRUCTION" missed="0" covered="17"/>
+      </method>
+    </class>
+  </package>
+</report>

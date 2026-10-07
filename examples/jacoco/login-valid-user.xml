@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report name="login-valid-user">
+  <package name="com/acme/steps">
+    <class name="com/acme/steps/LoginSteps" sourcefilename="LoginSteps.java">
+      <method name="userLogsIn" desc="()V" line="22">
+        <counter type="INSTRUCTION" missed="0" covered="21"/>
+      </method>
+    </class>
+  </package>
+  <package name="com/acme/helpers">
+    <class name="com/acme/helpers/AuthHelper" sourcefilename="AuthHelper.java">
+      <method name="validateToken" desc="(Ljava/lang/String;)Z" line="41">
+        <counter type="INSTRUCTION" missed="3" covered="18"/>
+      </method>
+    </class>
+  </package>
+</report>

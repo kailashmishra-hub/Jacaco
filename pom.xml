@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.example</groupId>
-    <artifactId>jacoco-demo</artifactId>
+    <groupId>com.example.impact</groupId>
+    <artifactId>cucumber-impact-tracker</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <name>JaCoCo Demo</name>
-    <description>A small Java project configured with JUnit and JaCoCo coverage reports.</description>
+    <name>Cucumber Impact Tracker</name>
+    <description>Builds scenario-to-code impact mappings from per-scenario JaCoCo reports.</description>
 
     <properties>
         <maven.compiler.release>17</maven.compiler.release>
@@ -34,6 +34,18 @@
                 <version>3.5.2</version>
                 <configuration>
                     <useModulePath>false</useModulePath>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.example.impact.ImpactTrackerApp</mainClass>
+                        </manifest>
+                    </archive>
                 </configuration>
             </plugin>
             <plugin>
